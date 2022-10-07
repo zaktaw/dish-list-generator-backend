@@ -11,8 +11,28 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dish_sequence")
     private Integer id;
     private String name;
-    private List<String> ingredients;
+
+    @ManyToOne
+    @JoinColumn(name="appUser_id", referencedColumnName = "id")
+    private AppUser appUser;
+
+    @ElementCollection
     private List<String> tags;
+    @ElementCollection
+    private List<String> ingredients;
+
+   /* @ManyToMany
+    @JoinTable(name="ingredients_in_dishes",
+            joinColumns = @JoinColumn(name = "dish_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
+    private List<Ingredient> ingredients;
+    @ManyToMany
+    @JoinTable(name="tags_in_dishes",
+            joinColumns = @JoinColumn(name = "dish_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags;*/
 
     public Dish() {
     }
@@ -25,19 +45,27 @@ public class Dish {
         this.name = name;
     }
 
-    public List<String> getIngredients() {
+   /* public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<String> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }*/
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 }

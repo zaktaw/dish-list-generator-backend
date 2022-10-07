@@ -1,5 +1,7 @@
 package com.zaktaw.WebAppDishListGenerator.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,7 +17,8 @@ public class AppUser {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "appUser")
+    @JsonIgnore
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
     private List<Dish> dishes;
 
     public AppUser() {
@@ -70,11 +73,11 @@ public class AppUser {
         this.password = password;
     }
 
-  /*  public List<Dish> getDishes() {
+    public List<Dish> getDishes() {
         return dishes;
     }
 
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
-    }*/
+    public void addDish(Dish dish) {
+        dishes.add(dish);
+    }
 }
