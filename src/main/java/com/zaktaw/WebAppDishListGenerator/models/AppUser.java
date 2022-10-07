@@ -1,15 +1,41 @@
 package com.zaktaw.WebAppDishListGenerator.models;
 
+import javax.persistence.*;
 import java.util.List;
 
-public class User {
+@Entity
+@Table
+public class AppUser {
+    @Id
+    @SequenceGenerator(name = "app_user_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_user_sequence")
+    private Integer id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "appUser")
     private List<Dish> dishes;
 
-    public User() {
+    public AppUser() {
+    }
+
+    public AppUser(Integer id, String firstName, String lastName, String email, String password) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+       // this.dishes = dishes;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -44,11 +70,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Dish> getDishes() {
+  /*  public List<Dish> getDishes() {
         return dishes;
     }
 
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
-    }
+    }*/
 }

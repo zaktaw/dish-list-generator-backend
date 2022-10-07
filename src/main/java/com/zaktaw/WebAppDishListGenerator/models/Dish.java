@@ -1,8 +1,15 @@
 package com.zaktaw.WebAppDishListGenerator.models;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table
 public class Dish {
+    @Id
+    @SequenceGenerator(name = "dish_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dish_sequence")
+    private Integer id;
     private String name;
     private List<String> ingredients;
     private List<String> tags;
