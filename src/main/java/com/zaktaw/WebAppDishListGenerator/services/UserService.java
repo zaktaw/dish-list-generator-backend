@@ -45,4 +45,16 @@ public class UserService {
     }
 
 
+    public ResponseEntity<String> login(AppUser appUser) {
+        AppUser userFromDb = userRepository.findByEmail(appUser.getEmail());
+        if (userFromDb == null) return new ResponseEntity<>("Password did not match email", HttpStatus.FORBIDDEN);
+        else {
+            // check if password matches password in database
+            // TODO: implement hashing and salting
+            if (appUser.getPassword().equals(userFromDb.getPassword())) {
+                return new ResponseEntity<>("Login successful", HttpStatus.OK);
+            }
+            else return new ResponseEntity<>("Password did not match email", HttpStatus.FORBIDDEN);
+        }
+    }
 }

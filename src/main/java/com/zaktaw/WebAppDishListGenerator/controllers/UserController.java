@@ -26,24 +26,18 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody AppUser appUser) {
         return userService.register(appUser);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AppUser appUser) {
+        return userService.login(appUser);
+    }
+
     @PutMapping("/{userId}")
     public Optional<AppUser> addDishToUser(@PathVariable Integer userId, @RequestBody Dish dish) {
-
-        System.out.println("Printing tags");
-        for (String tag : dish.getTags()) {
-            System.out.println(tag);
-        }
-
-        /*System.out.println("Printing tags");
-        for (String tag : dish.getIngredients()) {
-            System.out.println(tag);
-        }*/
-
         dishService.addDish(dish);
         return userService.addDishToUser(userId, dish);
     }
