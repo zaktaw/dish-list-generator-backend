@@ -27,12 +27,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody AppUser appUser) {
+    public ResponseEntity<AppUser> register(@RequestBody AppUser appUser) {
         return userService.register(appUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AppUser appUser) {
+    public ResponseEntity<AppUser> login(@RequestBody AppUser appUser) {
         return userService.login(appUser);
     }
 
