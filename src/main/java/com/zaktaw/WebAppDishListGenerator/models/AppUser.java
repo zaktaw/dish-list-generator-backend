@@ -17,20 +17,20 @@ public class AppUser {
     private String email;
     private String password;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    //@JsonIgnore
+    @OneToMany(mappedBy = "appUser")
     private List<Dish> dishes;
 
     public AppUser() {
     }
 
-    public AppUser(Integer id, String firstName, String lastName, String email, String password) {
+    public AppUser(Integer id, String firstName, String lastName, String email, String password, List<Dish> dishes) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-       // this.dishes = dishes;
+       this.dishes = dishes;
     }
 
     public Integer getId() {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -17,7 +18,13 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
     private DishService dishService;
+
+    @GetMapping
+    public List<AppUser> getAllUsers() {
+        return userService.getAllUsers();
+    }
 
     @PostMapping
     public ResponseEntity<String> register(@RequestBody AppUser appUser) {
@@ -26,6 +33,17 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public Optional<AppUser> addDishToUser(@PathVariable Integer userId, @RequestBody Dish dish) {
+
+        System.out.println("Printing tags");
+        for (String tag : dish.getTags()) {
+            System.out.println(tag);
+        }
+
+        /*System.out.println("Printing tags");
+        for (String tag : dish.getIngredients()) {
+            System.out.println(tag);
+        }*/
+
         dishService.addDish(dish);
         return userService.addDishToUser(userId, dish);
     }
