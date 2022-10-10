@@ -37,11 +37,11 @@ public class UserService {
 
     }
 
-    public Optional<AppUser> addDishToUser(Integer userId, Dish dish) {
+    public ResponseEntity<AppUser> addDishToUser(Integer userId, Dish dish) {
         AppUser user = userRepository.findById(userId).get();
         user.addDish(dish);
         userRepository.save(user);
-        return Optional.of(user);
+        return new ResponseEntity(user, HttpStatus.CREATED);
     }
 
 
