@@ -11,9 +11,6 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dish_sequence")
     private Integer id;
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "app_user_id", referencedColumnName = "id")
-    private AppUser appUser;
 
     @ElementCollection
     private List<String> tags;
@@ -31,14 +28,6 @@ public class Dish {
         this.name = name;
     }
 
-    public AppUser getAppUser() {
-        return appUser;
-    }
-
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
-    }
-
     public void setTags(List<String> tags) {
         this.tags = tags;
     }
@@ -51,7 +40,7 @@ public class Dish {
         return tags;
     }
 
-   /* public List<String> getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
-    }*/
+    }
 }

@@ -18,7 +18,8 @@ public class AppUser {
     private String password;
 
     //@JsonIgnore
-    @OneToMany(mappedBy = "appUser")
+    @OneToMany(targetEntity = Dish.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "app_user_dish_foreign_key", referencedColumnName = "id") // "id" is referencing AppUser's id
     private List<Dish> dishes;
 
     public AppUser() {
