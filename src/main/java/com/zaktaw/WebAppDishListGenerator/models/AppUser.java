@@ -3,6 +3,7 @@ package com.zaktaw.WebAppDishListGenerator.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class AppUser {
     //@JsonIgnore
     @OneToMany(targetEntity = Dish.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "app_user_dish_foreign_key", referencedColumnName = "id") // "id" is referencing AppUser's id
-    private List<Dish> dishes;
+    private List<Dish> dishes = new ArrayList<>();
 
     public AppUser() {
     }
