@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,8 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<AppUser> register(@RequestBody AppUser appUser) {
+        System.out.print(appUser);
+
         return userService.register(appUser);
     }
 
@@ -38,9 +41,15 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<AppUser> addDishToUser(@PathVariable Integer userId, @RequestBody Dish dish) {
+    public ResponseEntity<Dish> addDishToUser(@PathVariable Integer userId, @RequestBody Dish dish) {
         dishService.addDish(dish);
         return userService.addDishToUser(userId, dish);
+    }
+
+    @PutMapping("/removeDish/{userId}")
+    public ResponseEntity<Dish> removeDishFromUser(@PathVariable Integer userId, @RequestBody Dish dish) {
+        dishService.removeDish(dish);
+        return userService.removeDishFromUser(userId, dish);
     }
 }
 

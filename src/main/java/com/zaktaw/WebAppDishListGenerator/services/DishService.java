@@ -15,4 +15,7 @@ public class DishService {
         return dishRepository.save(dish);
     }
 
+    public void removeDish(Dish dish) {
+        dishRepository.delete(dish);
+    }
 }

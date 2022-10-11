@@ -82,4 +82,20 @@ public class AppUser {
     public void addDish(Dish dish) {
         dishes.add(dish);
     }
+
+    public void removeDish(Dish dish) {
+        dishes.remove(dish);
+    }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", dishes=" + dishes +
+                '}';
+    }
 }

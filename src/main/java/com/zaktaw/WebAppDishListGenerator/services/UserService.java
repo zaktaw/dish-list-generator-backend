@@ -37,11 +37,11 @@ public class UserService {
 
     }
 
-    public ResponseEntity<AppUser> addDishToUser(Integer userId, Dish dish) {
+    public ResponseEntity<Dish> addDishToUser(Integer userId, Dish dish) {
         AppUser user = userRepository.findById(userId).get();
         user.addDish(dish);
         userRepository.save(user);
-        return new ResponseEntity(user, HttpStatus.CREATED);
+        return new ResponseEntity(dish, HttpStatus.CREATED);
     }
 
 
@@ -56,5 +56,12 @@ public class UserService {
             }
             else return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
+    }
+
+    public ResponseEntity<Dish> removeDishFromUser(Integer userId, Dish dish) {
+        AppUser user = userRepository.findById(userId).get();
+        user.removeDish(dish);
+        userRepository.save(user);
+        return new ResponseEntity(dish, HttpStatus.OK);
     }
 }
