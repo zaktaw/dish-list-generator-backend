@@ -1,7 +1,5 @@
 package com.zaktaw.WebAppDishListGenerator.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +11,7 @@ public class AppUser {
     @SequenceGenerator(name = "app_user_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_user_sequence")
     private Integer id;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private String username;
     private String password;
 
     //@JsonIgnore
@@ -26,11 +22,9 @@ public class AppUser {
     public AppUser() {
     }
 
-    public AppUser(Integer id, String firstName, String lastName, String email, String password, List<Dish> dishes) {
+    public AppUser(Integer id, String username, String password, List<Dish> dishes) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.password = password;
        this.dishes = dishes;
     }
@@ -43,28 +37,12 @@ public class AppUser {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -89,13 +67,6 @@ public class AppUser {
 
     @Override
     public String toString() {
-        return "AppUser{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", dishes=" + dishes +
-                '}';
+        return id + ": " + username;
     }
 }

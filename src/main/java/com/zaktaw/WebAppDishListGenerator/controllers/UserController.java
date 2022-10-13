@@ -30,8 +30,6 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<AppUser> register(@RequestBody AppUser appUser) {
-        System.out.print(appUser);
-
         return userService.register(appUser);
     }
 

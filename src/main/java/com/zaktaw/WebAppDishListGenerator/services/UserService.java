@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public ResponseEntity<AppUser> register(AppUser appUser) {
-        AppUser appUserFromDb = userRepository.findByEmail(appUser.getEmail());
+        AppUser appUserFromDb = userRepository.findByUsername(appUser.getUsername());
 
         // user exists
         if (appUserFromDb != null) {
@@ -32,7 +32,7 @@ public class UserService {
         // user does not exist -> register new user
         else {
             userRepository.save(appUser);
-            return new ResponseEntity<>(appUser, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(appUser, HttpStatus.CREATED);
         }
 
     }
@@ -46,7 +46,7 @@ public class UserService {
 
 
     public ResponseEntity<AppUser> login(AppUser appUser) {
-        AppUser userFromDb = userRepository.findByEmail(appUser.getEmail());
+        AppUser userFromDb = userRepository.findByUsername(appUser.getUsername());
         if (userFromDb == null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         else {
             // check if password matches password in database
