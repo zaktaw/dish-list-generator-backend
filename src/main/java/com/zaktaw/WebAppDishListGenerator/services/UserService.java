@@ -1,5 +1,6 @@
 package com.zaktaw.WebAppDishListGenerator.services;
 
+import com.zaktaw.WebAppDishListGenerator.Utility.PasswordHashing;
 import com.zaktaw.WebAppDishListGenerator.models.AppUser;
 import com.zaktaw.WebAppDishListGenerator.models.Dish;
 import com.zaktaw.WebAppDishListGenerator.repositories.UserRepository;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public ResponseEntity<AppUser> register(AppUser appUser) {
+    public ResponseEntity<AppUser> register(AppUser appUser)  {
         AppUser appUserFromDb = userRepository.findByUsername(appUser.getUsername());
 
         // user exists
@@ -31,6 +33,8 @@ public class UserService {
 
         // user does not exist -> register new user
         else {
+            String hashedPassword = PasswordHashing.hashPassord(appUser.getPassword());
+            appUser.setPassword(hashedPassword);
             userRepository.save(appUser);
             return new ResponseEntity<>(appUser, HttpStatus.CREATED);
         }
@@ -50,8 +54,8 @@ public class UserService {
         if (userFromDb == null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         else {
             // check if password matches password in database
-            // TODO: implement hashing and salting
-            if (appUser.getPassword().equals(userFromDb.getPassword())) {
+            String passwordHashed = PasswordHashing.hashPassord(appUser.getPassword());
+            if (passwordHashed.equals(userFromDb.getPassword())) {
                 return new ResponseEntity<>(userFromDb, HttpStatus.OK);
             }
             else return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
