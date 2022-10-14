@@ -23,11 +23,6 @@ public class UserController {
     @Autowired
     private DishService dishService;
 
-    @GetMapping
-    public List<AppUser> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
     @PostMapping("/register")
     public ResponseEntity<AppUser> register(@RequestBody AppUser appUser) {
         return userService.register(appUser);
@@ -39,15 +34,13 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<Dish> addDishToUser(@PathVariable Integer userId, @RequestBody Dish dish) {
-        dishService.addDish(dish);
-        return userService.addDishToUser(userId, dish);
+    public ResponseEntity<Dish> addDishToUser(@PathVariable Integer userId, @RequestBody Dish dish, @RequestHeader("userAuthentication") String authorization) {
+        return userService.addDishToUser(userId, authorization, dish);
     }
 
     @PutMapping("/removeDish/{userId}")
-    public ResponseEntity<Dish> removeDishFromUser(@PathVariable Integer userId, @RequestBody Dish dish) {
-        dishService.removeDish(dish);
-        return userService.removeDishFromUser(userId, dish);
+    public ResponseEntity<Dish> removeDishFromUser(@PathVariable Integer userId, @RequestBody Dish dish, @RequestHeader("userAuthentication") String authorization) {
+        return userService.removeDishFromUser(userId, authorization, dish);
     }
 }
 

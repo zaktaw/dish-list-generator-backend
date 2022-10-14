@@ -18,9 +18,14 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private DishService dishService;
 
-    public List<AppUser> getAllUsers() {
-        return userRepository.findAll();
+     private AppUser authenticateUser(Integer userId, String authorization) {
+         AppUser userFromDb = userRepository.findById(userId).get();
+         if (userFromDb == null) return null;
+         if (userFromDb.getPassword().equals(authorization)) return userFromDb;
+         return null;
     }
 
     public ResponseEntity<AppUser> register(AppUser appUser)  {
@@ -41,11 +46,14 @@ public class UserService {
 
     }
 
-    public ResponseEntity<Dish> addDishToUser(Integer userId, Dish dish) {
-        AppUser user = userRepository.findById(userId).get();
-        user.addDish(dish);
-        userRepository.save(user);
-        return new ResponseEntity(dish, HttpStatus.CREATED);
+    public ResponseEntity<Dish> addDishToUser(Integer userId, String authorization, Dish dish) {
+        AppUser authenticateUser = authenticateUser(userId, authorization);
+        if (authenticateUser == null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+
+        authenticateUser.addDish(dish);
+        userRepository.save(authenticateUser);
+
+        return new ResponseEntity(dish, HttpStatus.OK);
     }
 
 
@@ -62,10 +70,13 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<Dish> removeDishFromUser(Integer userId, Dish dish) {
-        AppUser user = userRepository.findById(userId).get();
-        user.removeDish(dish);
-        userRepository.save(user);
+    public ResponseEntity<Dish> removeDishFromUser(Integer userId, String authorization, Dish dish) {
+        AppUser authenticateUser = authenticateUser(userId, authorization);
+        if (authenticateUser == null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        System.out.println("Removing dish: " + dish);
+        dishService.removeDish(dish);
+        authenticateUser.removeDish(dish);
+        userRepository.save(authenticateUser);
         return new ResponseEntity(dish, HttpStatus.OK);
     }
 }
